@@ -38,7 +38,10 @@ class ClientsController extends Controller
 
     public function getList(ClientsGetListRequest $request): Response
     {
-        $data = $this->clientsRepo->findMany(PaginatorDTO::fromRequest($request));
+        $data = $this->clientsRepo->findMany(
+            paginator: PaginatorDTO::fromRequest($request),
+            q: $request->input('q'),
+        );
         return $this->basePresenter->paginated($data, ClientResource::class);
     }
 

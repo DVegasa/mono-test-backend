@@ -24,9 +24,12 @@ class ClientsRepository
 
     public function findMany(
         PaginatorDTO $paginator,
+        ?string      $q = null,
     ): LengthAwarePaginator
     {
         return DB::table('clients')
+            ->when($q, static fn(Builder $builder) => $builder->orWhere('name', 'ILIKE', "%$q%"))
+            ->when($q, static fn(Builder $builder) => $builder->orWhere('phone', 'ILIKE', "%$q%"))
             ->paginate(
                 perPage: $paginator->perPage,
                 page: $paginator->currentPage,

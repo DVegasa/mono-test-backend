@@ -11,6 +11,7 @@ class ClientsGetListRequest extends FormRequest
     {
         return [
             ...PaginatorDTO::validationRules(),
+            'q' => ['nullable', 'string'],
         ];
     }
 }
