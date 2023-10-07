@@ -8,7 +8,7 @@ class DevException extends PublicException
 {
     public function getErrorCode(): string
     {
-        return 'devException';
+        return 'dev';
     }
 
     public function getHttpCode(): int

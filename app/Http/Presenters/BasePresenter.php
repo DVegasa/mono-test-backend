@@ -25,19 +25,23 @@ class BasePresenter
     }
 
 
-    public function paginated(LengthAwarePaginator $data): Response
+    public function paginated(LengthAwarePaginator $data, ?string $resourceNamespace = null): Response
     {
         $items = $data->items();
+        if ($resourceNamespace) {
+            $items = $resourceNamespace::collection($items);
+        }
+
         return response([
             'status' => self::STATUS_OK,
             'data' => [
-                'items' => $items,
                 'pagination' => [
                     'perPage' => $data->perPage(),
                     'currentPage' => $data->currentPage(),
                     'lastPage' => $data->lastPage(),
                     'total' => $data->total(),
-                ]
+                ],
+                'items' => $items,
             ],
         ])->setStatusCode(200);
     }

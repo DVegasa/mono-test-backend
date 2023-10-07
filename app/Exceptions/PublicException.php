@@ -13,7 +13,7 @@ class PublicException extends Exception
 
     public function getHttpCode(): int
     {
-        return 400;
+        return 404;
     }
 
     public function getData(): mixed
@@ -23,6 +23,6 @@ class PublicException extends Exception
 
     public function publicMessage(): ?string
     {
-        return null;
+        return 'Не найдено';
     }
 }

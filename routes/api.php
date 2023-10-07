@@ -11,18 +11,18 @@ Route::prefix('/v1')->group(function () {
     Route::get('/errorPing', [DevController::class, 'errorPing']);
 
     Route::prefix('/cars')->group(function () {
-        Route::get('/get', [CarsController::class, 'get']);
-        Route::get('/getList', [CarsController::class, 'getList']);
         Route::post('/create', [CarsController::class, 'create']);
-        Route::post('/update', [CarsController::class, 'update']);
         Route::post('/delete', [CarsController::class, 'delete']);
+        Route::get('/getList', [CarsController::class, 'getList']);
+        Route::get('/get', [CarsController::class, 'get']);
+        Route::post('/update', [CarsController::class, 'update']);
     });
 
     Route::prefix('/clients')->group(function () {
-        Route::get('/get', [ClientsController::class, 'get']);
-        Route::get('/getList', [ClientsController::class, 'getList']);
         Route::post('/create', [ClientsController::class, 'create']);
-        Route::post('/update', [ClientsController::class, 'update']);
         Route::post('/delete', [ClientsController::class, 'delete']);
+        Route::get('/getList', [ClientsController::class, 'getList']);
+        Route::get('/get', [ClientsController::class, 'get']);
+        Route::post('/update', [ClientsController::class, 'update']);
     });
 });

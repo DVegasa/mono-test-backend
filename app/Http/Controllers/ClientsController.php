@@ -2,32 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\DTOs\PaginatorDTO;
+use App\Exceptions\NotFoundException;
+use App\Http\Presenters\BasePresenter;
+use App\Http\Requests\ClientsCreateRequest;
+use App\Http\Requests\ClientsDeleteRequest;
+use App\Http\Requests\ClientsGetListRequest;
+use App\Http\Requests\ClientsGetRequest;
+use App\Http\Requests\ClientsUpdateRequest;
+use App\Http\Resources\ClientResource;
+use App\Repositories\ClientsRepository;
 use Illuminate\Http\Response;
 
 class ClientsController extends Controller
 {
-    public function get(Request $request): Response
+    public function __construct(
+        public BasePresenter     $basePresenter,
+        public ClientsRepository $clientsRepo,
+    )
+    {
+        parent::__construct($basePresenter);
+    }
+
+
+    /**
+     * @throws NotFoundException
+     */
+    public function get(ClientsGetRequest $request): Response
+    {
+        $data = $this->clientsRepo->find($request->input('clientId'));
+        if (!$data) throw new NotFoundException();
+        return $this->basePresenter->success(new ClientResource($data));
+    }
+
+
+    public function getList(ClientsGetListRequest $request): Response
+    {
+        $data = $this->clientsRepo->findMany(PaginatorDTO::fromRequest($request));
+        return $this->basePresenter->paginated($data, ClientResource::class);
+    }
+
+
+    public function create(ClientsCreateRequest $request): Response
     {
         return response(['status' => 'wip']);
     }
 
-    public function getList(Request $request): Response
+
+    public function update(ClientsUpdateRequest $request): Response
     {
         return response(['status' => 'wip']);
     }
 
-    public function create(Request $request): Response
-    {
-        return response(['status' => 'wip']);
-    }
 
-    public function update(Request $request): Response
-    {
-        return response(['status' => 'wip']);
-    }
-
-    public function delete(Request $request): Response
+    public function delete(ClientsDeleteRequest $request): Response
     {
         return response(['status' => 'wip']);
     }
