@@ -10,7 +10,7 @@ class BasePresenter
     public const STATUS_OK = 'ok';
     public const STATUS_ERROR = 'error';
 
-    public function success(mixed $data): Response
+    public function success(mixed $data = []): Response
     {
         if (is_array($data) && empty($data)) {
             $data = new \stdClass();

@@ -35,4 +35,12 @@ class ClientsRepository
                 page: $paginator->currentPage,
             );
     }
+
+    public function delete(
+        int $id,
+    ): bool
+    {
+        return DB::table('clients')
+            ->delete($id);
+    }
 }

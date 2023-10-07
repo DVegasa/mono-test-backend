@@ -58,9 +58,14 @@ class ClientsController extends Controller
     }
 
 
+    /**
+     * @throws NotFoundException
+     */
     public function delete(ClientsDeleteRequest $request): Response
     {
-        return response(['status' => 'wip']);
+        $data = $this->clientsRepo->delete($request->input('clientId'));
+        if (!$data) throw new NotFoundException();
+        return $this->basePresenter->success();
     }
 
 }
