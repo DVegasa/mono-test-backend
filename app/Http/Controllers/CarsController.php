@@ -7,6 +7,7 @@ use App\Http\Requests\CarsDeleteRequest;
 use App\Http\Requests\CarsGetListRequest;
 use App\Http\Requests\CarsGetRequest;
 use App\Http\Requests\CarsUpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class CarsController extends Controller
@@ -33,6 +34,11 @@ class CarsController extends Controller
     }
 
     public function delete(CarsDeleteRequest $request): Response
+    {
+        return response(['status' => 'wip']);
+    }
+
+    public function switchParking(Request $request): Response
     {
         return response(['status' => 'wip']);
     }

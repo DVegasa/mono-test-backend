@@ -31,6 +31,7 @@ class ClientsRepository
         return DB::table('clients')
             ->when($q, static fn(Builder $builder) => $builder->orWhere('name', 'ILIKE', "%$q%"))
             ->when($q, static fn(Builder $builder) => $builder->orWhere('phone', 'ILIKE', "%$q%"))
+            ->orderBy('updated_at', 'desc')
             ->paginate(
                 perPage: $paginator->perPage,
                 page: $paginator->currentPage,
@@ -45,11 +46,23 @@ class ClientsRepository
             ->delete($id);
     }
 
+    /** @return int ID новой сущности */
     public function create(
         array $fields,
-    ): Client
+    ): int
     {
         $res = DB::table('clients')->insertGetId($fields);
-        return $this->find(id: $res);
+        return $res;
+    }
+
+    public function update(
+        int   $id,
+        array $fields,
+    ): int
+    {
+        $res = DB::table('clients')
+            ->where('id', $id)
+            ->update($fields);
+        return $res;
     }
 }

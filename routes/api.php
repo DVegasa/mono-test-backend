@@ -16,6 +16,8 @@ Route::prefix('/v1')->group(function () {
         Route::get('/getList', [CarsController::class, 'getList']);
         Route::get('/get', [CarsController::class, 'get']);
         Route::post('/update', [CarsController::class, 'update']);
+
+        Route::post('/switchParking', [CarsController::class, 'switchParking']);
     });
 
     Route::prefix('/clients')->group(function () {

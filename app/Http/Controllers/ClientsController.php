@@ -64,7 +64,7 @@ class ClientsController extends Controller
             throw new UniqueViolationException(['phone']);
         }
 
-        $res = $this->clientsRepo->create([
+        $id = $this->clientsRepo->create([
             'name' => $request->input('name'),
             'sex' => $request->input('sex'),
             'phone' => $request->input('phone'),
@@ -72,15 +72,36 @@ class ClientsController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $res = $this->clientsRepo->find(id: $id);
 
         DB::commit();
         return $this->basePresenter->success(new ClientResource($res));
     }
 
 
+    /**
+     * @throws NotFoundException
+     * @throws UniqueViolationException
+     */
     public function update(ClientsUpdateRequest $request): Response
     {
-        return response(['status' => 'wip']);
+        DB::beginTransaction();
+        $id = $request->input('clientId');
+
+        if (!$this->clientsRepo->find(id: $id)) throw new NotFoundException();
+        if ($this->clientsRepo->find(phone: $request->input('phone'))) throw new UniqueViolationException(['phone']);
+
+        $this->clientsRepo->update($id, [
+            'name' => $request->input('name'),
+            'sex' => $request->input('sex'),
+            'phone' => $request->input('phone'),
+            'address' => $request->input('address'),
+            'updated_at' => now(),
+        ]);
+        $res = $this->clientsRepo->find(id: $id);
+
+        DB::commit();
+        return $this->basePresenter->success(new ClientResource($res));
     }
 
 

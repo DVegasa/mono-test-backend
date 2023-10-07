@@ -6,23 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ClientsUpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'clientId' => ['required', 'numeric'],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'sex' => ['required', 'boolean'],
+            'phone' => ['required', 'starts_with:+', 'max:15'],
+            'address' => ['nullable', 'string'],
         ];
     }
 }
