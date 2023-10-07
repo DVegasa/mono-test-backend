@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\DevController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('/v1')->group(function () {
-    Route::get('/ping', fn() => response(['ping' => 'pong']));
+    Route::get('/ping', [DevController::class, 'ping']);
+    Route::get('/errorPing', [DevController::class, 'errorPing']);
 
     Route::prefix('/cars')->group(function () {
         Route::get('/get', [CarsController::class, 'get']);

@@ -2,29 +2,42 @@
 
 namespace App\Exceptions;
 
+use App\Http\Presenters\BasePresenter;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * The list of the inputs that are never flashed to the session on validation exceptions.
-     *
-     * @var array<int, string>
-     */
     protected $dontFlash = [
         'current_password',
         'password',
         'password_confirmation',
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
+    public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        // Публичная ошибка приложения
+        $this->renderable(static fn(PublicException $e) => (new BasePresenter())->error(
+            data: $e->getData(),
+            status: $e->getHttpCode(),
+            errorCode: $e->getErrorCode(),
+            message: $e->publicMessage(),
+        ));
+
+        // Ошибка валидации Laravel Request
+        $this->renderable(static fn(ValidationException $e) => (new BasePresenter())->error(
+            data: $e->errors(),
+            status: 400,
+            errorCode: 'validationError',
+            message: $e->getMessage(),
+        ));
+
+        // Все остальные ошибки
+        $this->renderable(static fn(\Exception $e) => (new BasePresenter())->error(
+            data: null,
+            status: 500,
+            errorCode: 'serverError',
+            message: $e->getMessage(),
+        ));
     }
 }
