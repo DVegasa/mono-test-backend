@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('plate', 50)->unique();
             $table->boolean('is_parked');
             $table->unsignedBigInteger('owner_id');
+            $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('clients')
                 ->cascadeOnDelete();

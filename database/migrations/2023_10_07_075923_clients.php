@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name', 255);
             $table->boolean('sex');
-            $table->string('phone', 15)->unique();
+            $table->string('phone', 25)->unique();
             $table->text('address')->nullable();
             $table->timestamps();
         });
