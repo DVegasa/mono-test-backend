@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DTOs\PaginatorDTO;
 use App\Exceptions\NotFoundException;
+use App\Exceptions\UniqueViolationException;
 use App\Http\Presenters\BasePresenter;
 use App\Http\Requests\ClientsCreateRequest;
 use App\Http\Requests\ClientsDeleteRequest;
@@ -13,6 +14,7 @@ use App\Http\Requests\ClientsUpdateRequest;
 use App\Http\Resources\ClientResource;
 use App\Repositories\ClientsRepository;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class ClientsController extends Controller
 {
@@ -30,25 +32,49 @@ class ClientsController extends Controller
      */
     public function get(ClientsGetRequest $request): Response
     {
-        $data = $this->clientsRepo->find($request->input('clientId'));
-        if (!$data) throw new NotFoundException();
-        return $this->basePresenter->success(new ClientResource($data));
+        DB::beginTransaction();
+        $res = $this->clientsRepo->find(id: $request->input('clientId'));
+        if (!$res) throw new NotFoundException();
+
+        DB::commit();
+        return $this->basePresenter->success(new ClientResource($res));
     }
 
 
     public function getList(ClientsGetListRequest $request): Response
     {
-        $data = $this->clientsRepo->findMany(
+        DB::beginTransaction();
+        $res = $this->clientsRepo->findMany(
             paginator: PaginatorDTO::fromRequest($request),
             q: $request->input('q'),
         );
-        return $this->basePresenter->paginated($data, ClientResource::class);
+
+        DB::commit();
+        return $this->basePresenter->paginated($res, ClientResource::class);
     }
 
 
+    /**
+     * @throws UniqueViolationException
+     */
     public function create(ClientsCreateRequest $request): Response
     {
-        return response(['status' => 'wip']);
+        DB::beginTransaction();
+        if ($this->clientsRepo->find(phone: $request->input('phone'))) {
+            throw new UniqueViolationException(['phone']);
+        }
+
+        $res = $this->clientsRepo->create([
+            'name' => $request->input('name'),
+            'sex' => $request->input('sex'),
+            'phone' => $request->input('phone'),
+            'address' => $request->input('address'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::commit();
+        return $this->basePresenter->success(new ClientResource($res));
     }
 
 
@@ -63,8 +89,11 @@ class ClientsController extends Controller
      */
     public function delete(ClientsDeleteRequest $request): Response
     {
-        $data = $this->clientsRepo->delete($request->input('clientId'));
-        if (!$data) throw new NotFoundException();
+        DB::beginTransaction();
+        $res = $this->clientsRepo->delete($request->input('clientId'));
+        if (!$res) throw new NotFoundException();
+
+        DB::commit();
         return $this->basePresenter->success();
     }
 

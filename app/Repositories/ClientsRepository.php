@@ -11,15 +11,16 @@ use Illuminate\Support\Facades\DB;
 class ClientsRepository
 {
     public function find(
-        int $id,
+        ?int    $id = null,
+        ?string $phone = null,
     ): ?Client
     {
-        return Client::make(
-            (array)
-            DB::table('clients')
-                ->when($id, static fn(Builder $builder) => $builder->where('id', $id))
-                ->first()
-        );
+        $res = DB::table('clients')
+            ->when($id, static fn(Builder $builder) => $builder->where('id', $id))
+            ->when($phone, static fn(Builder $builder) => $builder->where('phone', $phone))
+            ->first();
+        if (!$res) return null;
+        return Client::make((array)$res);
     }
 
     public function findMany(
@@ -42,5 +43,13 @@ class ClientsRepository
     {
         return DB::table('clients')
             ->delete($id);
+    }
+
+    public function create(
+        array $fields,
+    ): Client
+    {
+        $res = DB::table('clients')->insertGetId($fields);
+        return $this->find(id: $res);
     }
 }

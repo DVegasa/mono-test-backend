@@ -3,12 +3,11 @@
 namespace App\Http\Resources;
 
 use App\Helpers;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ClientResource extends JsonResource
 {
-    public function toArray(Request $request)
+    public function toArray(mixed $request)
     {
         return [
             'id' => (int)$this?->id,
