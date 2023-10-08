@@ -14,7 +14,6 @@ use App\Http\Requests\CarsUpdateRequest;
 use App\Http\Resources\CarResource;
 use App\Repositories\CarsRepository;
 use App\Repositories\ClientsRepository;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -129,11 +128,5 @@ class CarsController extends Controller
 
         DB::commit();
         return $this->basePresenter->success();
-    }
-
-
-    public function switchParking(Request $request): Response
-    {
-        return response(['status' => 'wip']);
     }
 }

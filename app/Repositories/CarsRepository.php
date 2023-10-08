@@ -72,4 +72,16 @@ class CarsRepository
             ->update($fields);
         return $res;
     }
+
+    public function switchParking(
+        int $id,
+    ): int
+    {
+        $res = DB::table('cars')
+            ->where('id', $id)
+            ->update([
+                'is_parked' => DB::raw('NOT is_parked'),
+            ]);
+        return $res;
+    }
 }
