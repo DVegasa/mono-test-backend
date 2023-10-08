@@ -9,7 +9,7 @@ class ClientsDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clientId' => ['required', 'numeric'],
+            'clientId' => ['required', 'numeric', 'integer'],
         ];
     }
 }

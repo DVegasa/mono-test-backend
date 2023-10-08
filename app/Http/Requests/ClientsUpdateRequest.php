@@ -9,7 +9,7 @@ class ClientsUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'clientId' => ['required', 'numeric'],
+            'clientId' => ['required', 'numeric', 'integer'],
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'sex' => ['required', 'boolean'],
             'phone' => ['required', 'starts_with:+', 'max:15'],
