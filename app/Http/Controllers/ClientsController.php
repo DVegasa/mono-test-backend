@@ -89,7 +89,9 @@ class ClientsController extends Controller
         $id = $request->input('clientId');
 
         if (!$this->clientsRepo->find(id: $id)) throw new NotFoundException();
-        if ($this->clientsRepo->find(phone: $request->input('phone'))) throw new UniqueViolationException(['phone']);
+
+        $clientWithPhone = $this->clientsRepo->find(phone: $request->input('phone'));
+        if ($clientWithPhone && $clientWithPhone->id !== $id) throw new UniqueViolationException(['phone']);
 
         $this->clientsRepo->update($id, [
             'name' => $request->input('name'),

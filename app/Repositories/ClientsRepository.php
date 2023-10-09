@@ -65,4 +65,12 @@ class ClientsRepository
             ->update($fields);
         return $res;
     }
+
+    public function countRecords(): int
+    {
+        $res = DB::table('clients')
+            ->select(DB::raw('count(id) as count'))
+            ->get();
+        return $res[0]->count;
+    }
 }

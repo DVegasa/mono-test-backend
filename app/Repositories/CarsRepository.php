@@ -84,4 +84,15 @@ class CarsRepository
             ]);
         return $res;
     }
+
+    public function countRecords(
+        ?bool $isParked = null,
+    ): int
+    {
+        $res = DB::table('cars')
+            ->select(DB::raw('count(id) as count'))
+            ->when($isParked, static fn(Builder $builder) => $builder->where('is_parked', $isParked))
+            ->get();
+        return $res[0]->count;
+    }
 }

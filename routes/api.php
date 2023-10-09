@@ -4,6 +4,7 @@ use App\Http\Controllers\CarsController;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\DevController;
 use App\Http\Controllers\ParkingController;
+use App\Http\Controllers\StatsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,5 +30,9 @@ Route::prefix('/v1')->group(function () {
 
     Route::prefix('/parking')->group(function () {
         Route::post('/switchParking', [ParkingController::class, 'switchParking']);
+    });
+
+    Route::prefix('/stats')->group(function () {
+        Route::get('/all', [StatsController::class, 'all']);
     });
 });
