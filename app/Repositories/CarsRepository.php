@@ -58,7 +58,11 @@ class CarsRepository
         array $fields,
     ): int
     {
-        $res = DB::table('cars')->insertGetId($fields);
+        $res = DB::table('cars')->insertGetId([
+            ...$fields,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         return $res;
     }
 
@@ -69,7 +73,10 @@ class CarsRepository
     {
         $res = DB::table('cars')
             ->where('id', $id)
-            ->update($fields);
+            ->update([
+                ...$fields,
+                'updated_at' => now(),
+            ]);
         return $res;
     }
 
@@ -81,6 +88,7 @@ class CarsRepository
             ->where('id', $id)
             ->update([
                 'is_parked' => DB::raw('NOT is_parked'),
+                'updated_at' => now(),
             ]);
         return $res;
     }

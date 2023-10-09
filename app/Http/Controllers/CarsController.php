@@ -79,8 +79,6 @@ class CarsController extends Controller
             'plate' => $request->input('plate'),
             'is_parked' => $request->input('isParked'),
             'owner_id' => $request->input('ownerId'),
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
         $res = $this->carsRepo->find(id: $id);
 
@@ -97,9 +95,13 @@ class CarsController extends Controller
     {
         DB::beginTransaction();
         $id = $request->input('carId');
-
         if (!$this->carsRepo->find(id: $id)) throw new NotFoundException();
-        if ($this->carsRepo->find(plate: $request->input('plate'))) throw new UniqueViolationException(['plate']);
+
+        $carWithPlate = $this->carsRepo->find(plate: $request->input('plate'));
+        if (
+            $carWithPlate
+            && $carWithPlate->id != $id
+        ) throw new UniqueViolationException(['plate']);
 
         $this->carsRepo->update($id, [
             'brand' => $request->input('brand'),
@@ -108,7 +110,6 @@ class CarsController extends Controller
             'plate' => $request->input('plate'),
             'is_parked' => $request->input('isParked'),
             'owner_id' => $request->input('ownerId'),
-            'updated_at' => now(),
         ]);
         $res = $this->carsRepo->find(id: $id);
 

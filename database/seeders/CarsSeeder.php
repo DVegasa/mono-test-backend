@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -22,8 +23,8 @@ class CarsSeeder extends Seeder
                 'plate' => $this->randomPlate(),
                 'is_parked' => $faker->boolean(30),
                 'owner_id' => $faker->numberBetween(1, ClientsSeeder::$userCount),
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => Carbon::yesterday()->subMinutes(10000 - $i),
+                'updated_at' => Carbon::yesterday()->subMinutes(10000 - $i),
             ]);
         }
     }

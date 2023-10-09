@@ -15,8 +15,8 @@ class ClientResource extends JsonResource
             'sex' => (bool)$this?->sex,
             'phone' => $this?->phone,
             'address' => $this?->address,
-            'created_at' => Helpers::apiDateFormat($this?->created_at),
-            'updated_at' => Helpers::apiDateFormat($this?->updated_at),
+            'createdAt' => Helpers::apiDateFormat($this?->created_at),
+            'updatedAt' => Helpers::apiDateFormat($this?->updated_at),
         ];
     }
 }

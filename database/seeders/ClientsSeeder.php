@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -19,8 +20,8 @@ class ClientsSeeder extends Seeder
                 'sex' => $faker->boolean(),
                 'phone' => $faker->e164PhoneNumber(),
                 'address' => $faker->boolean(60) ? $faker->address() : null,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => Carbon::yesterday()->subMinutes(10000 - $i),
+                'updated_at' => Carbon::yesterday()->subMinutes(10000 - $i),
             ]);
         }
     }

@@ -51,7 +51,11 @@ class ClientsRepository
         array $fields,
     ): int
     {
-        $res = DB::table('clients')->insertGetId($fields);
+        $res = DB::table('clients')->insertGetId([
+            ...$fields,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         return $res;
     }
 
@@ -62,7 +66,10 @@ class ClientsRepository
     {
         $res = DB::table('clients')
             ->where('id', $id)
-            ->update($fields);
+            ->update([
+                ...$fields,
+                'updated_at' => now(),
+            ]);
         return $res;
     }
 

@@ -69,8 +69,6 @@ class ClientsController extends Controller
             'sex' => $request->input('sex'),
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
         $res = $this->clientsRepo->find(id: $id);
 
@@ -87,18 +85,19 @@ class ClientsController extends Controller
     {
         DB::beginTransaction();
         $id = $request->input('clientId');
-
         if (!$this->clientsRepo->find(id: $id)) throw new NotFoundException();
 
         $clientWithPhone = $this->clientsRepo->find(phone: $request->input('phone'));
-        if ($clientWithPhone && $clientWithPhone->id !== $id) throw new UniqueViolationException(['phone']);
+        if (
+            $clientWithPhone
+            && $clientWithPhone->id != $id
+        ) throw new UniqueViolationException(['phone']);
 
         $this->clientsRepo->update($id, [
             'name' => $request->input('name'),
             'sex' => $request->input('sex'),
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),
-            'updated_at' => now(),
         ]);
         $res = $this->clientsRepo->find(id: $id);
 

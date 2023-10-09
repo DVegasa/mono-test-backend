@@ -16,10 +16,10 @@ class CarResource extends JsonResource
             'model' => $this?->model,
             'color' => $this?->color,
             'plate' => $this?->plate,
-            'is_parked' => (bool)$this?->is_parked,
-            'owner_id' => $this?->owner_id,
-            'created_at' => Helpers::apiDateFormat($this?->created_at),
-            'updated_at' => Helpers::apiDateFormat($this?->updated_at),
+            'isParked' => (bool)$this?->is_parked,
+            'ownerId' => $this?->owner_id,
+            'createdAt' => Helpers::apiDateFormat($this?->created_at),
+            'updatedAt' => Helpers::apiDateFormat($this?->updated_at),
         ];
     }
 }
