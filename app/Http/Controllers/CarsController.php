@@ -51,6 +51,7 @@ class CarsController extends Controller
             paginator: PaginatorDTO::fromRequest($request),
             ownerId: $request->input('ownerId'),
             q: $request->input('q'),
+            onlyParked: $request->input('onlyParked'),
         );
 
         DB::commit();

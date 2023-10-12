@@ -27,10 +27,12 @@ class CarsRepository
         PaginatorDTO $paginator,
         ?int         $ownerId = null,
         ?string      $q = null,
+        ?bool        $onlyParked = null,
     ): LengthAwarePaginator
     {
         return DB::table('cars')
             ->when($ownerId, static fn(Builder $builder) => $builder->where('owner_id', "$ownerId"))
+            ->when($onlyParked, static fn(Builder $builder) => $builder->where('is_parked', true))
             ->where(function (Builder $group) use ($q) {
                 $group->when($q, static fn(Builder $builder) => $builder
                     ->orWhere('plate', 'ILIKE', "%$q%")

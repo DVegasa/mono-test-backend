@@ -13,6 +13,7 @@ class CarsGetListRequest extends FormRequest
             ...PaginatorDTO::validationRules(),
             'ownerId' => ['nullable', 'numeric', 'integer'],
             'q' => ['nullable', 'string'],
+            'onlyParked' => ['nullable', 'boolean'],
         ];
     }
 }
