@@ -1,66 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Тестовое задание в MONO (бэкенд)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Static Badge](https://img.shields.io/badge/by-Ed%20"DVegasa"%20Khalturin-black)
+](https://www.linkedin.com/in/dvegasa/)
 
-## About Laravel
+[![Static Badge](https://img.shields.io/badge/Backend-https://github.com/DVegasa/mono--test--backend-grey?logo=laravel)](https://github.com/DVegasa/mono-test-backend)
+[![Static Badge](https://img.shields.io/badge/Frontend-https://github.com/DVegasa/mono--test--frontend-grey?logo=vuedotjs)](https://github.com/DVegasa/mono-test-frontend)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Установка
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+`composer i`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Нужна рабочая БД (доступы указывать в файле `/.env`)
 
-## Learning Laravel
+# Запуск
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+`php artisan serve`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# ТЗ
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Попробуйте сделать следующее задание. Результат работы необходимо разместить в публичном репозитории bitbucket или
+Github. Ссылку прислать на электронную почту info@monodigital.ru
 
-## Laravel Sponsors
+**Задание:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Реализовать систему учёта клиентов автостоянки на фреймворке Laravel. Система должна иметь функции создания,
+редактирования, удаления данных о клиентах и их автомобилях, (*)а также должна быть возможность ведения учёта того,
+сколько и какие автомобили находится на стоянке. При написании проекта следует обратить внимание на защиту от XSS атак и
+SQL–инъекций.
 
-### Premium Partners
+**Основные сущности:**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Клиент
 
-## Contributing
+Автомобиль
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Атрибуты сущности "Клиент":**
 
-## Code of Conduct
+ФИО (мин 3 символа)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Пол (обязательный)
 
-## Security Vulnerabilities
+Телефон (обязательный, уникальный)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Адрес
 
-## License
+Автомобил(ь/и) (обязательный, мин 1)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Атрибуты сущности "Автомобиль":**
+
+Марка (обязательный)
+
+Моделель (обязательный)
+
+Цвет кузова (обязательный)
+
+Гос Номер РФ (обязательный, уникальный)
+
+Флаг статуса автомобиля означающий, что авто находится или отсутствует на стоянке (обязательный)
+
+**Необходимые страницы:**
+
+- Просмотр всех клиентов и их машин с пагинацией и ссылками на переходы к страницам редактирования и кнопками удаления
+  соответствующих сущностей
+- Страница создания клиента и данных о его машинах
+- Страница редактирования клиента и данных о его машинах
+
+(*) - Просмотр всех автомобилей, которые стоят на автостоянке, на странице должна быть форма ввода существующего клиента
+на стоянку. Форма состоит из 2х выпадающих списков, первый - клиенты, которые есть в системе, второй - автомобили
+выбранного клиента. Также должны быть кнопки при клике на которые меняется статус автомобиля (рис 2)
+
+**Требования к используемым технологиям:**
+
+PHP 5.6 и выше
+
+MySQL 5.6 и выше
+
+**Разрешено использовать фреймворки:**
+
+Codeigniter или Laravel последних стабильных версий. Если используется laravel, то все запросы к БД должны быть написаны
+через QueryBuilder или Raw Query (т. е. без методов Eloquent ORM).
